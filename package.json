@@ -1,0 +1,13 @@
+{
+  "name": "simplescreenshots",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "simplescreenshots": "./index.js"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.15",
+    "puppeteer": "^22.6.0",
+    "pdfkit": "^0.15.0"
+  }
+}
