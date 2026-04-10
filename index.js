@@ -37,9 +37,12 @@ async function run() {
     {
       type: "input",
       name: "url",
-      message: "Target URL (include http/https):",
+      message:
+        "Target URL or local path (e.g., http://localhost:3000 or file:///path/to/index.html):",
       validate: (input) =>
-        input.startsWith("http") ? true : "Enter a valid URL",
+        input.startsWith("http") || input.startsWith("file://")
+          ? true
+          : "Please enter a valid URL (http/https) or a local file path (file://)",
     },
   ]);
 
