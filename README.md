@@ -1,6 +1,11 @@
 # SimpleScreenshots 2
 
-Visual audit companion for [SimpleScraper](../scraper). It discovers routes from links plus `robots.txt`/sitemaps, or consumes a `mirror-manifest.json`, then captures every route in configurable viewports with reusable Chromium workers.
+[![CI](https://github.com/antonyoandrei/SimpleScreenshots/actions/workflows/ci.yml/badge.svg)](https://github.com/antonyoandrei/SimpleScreenshots/actions/workflows/ci.yml)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D20-3c873a)](https://nodejs.org)
+
+Visual audit companion for [SimpleScraper](https://github.com/antonyoandrei/SimpleScraper). It discovers routes from links plus `robots.txt`/sitemaps, or consumes a `mirror-manifest.json`, then captures every route in configurable viewports with reusable Chromium workers.
+
+![SimpleScreenshots visual report](docs/visual-report.png)
 
 ## Install
 
@@ -9,6 +14,12 @@ Requires Node.js 20+.
 ```bash
 npm install
 npm link
+```
+
+If Puppeteer cannot install Chrome automatically:
+
+```bash
+npx puppeteer browsers install chrome
 ```
 
 ## Usage
@@ -33,7 +44,7 @@ Audit routes already discovered by SimpleScraper:
 
 ```bash
 simplescreenshots \
-  --manifest ../scraper/mirror-manifest.json \
+  --manifest ./mirror-manifest.json \
   --output ./artifacts/example-audit
 ```
 
@@ -68,7 +79,7 @@ Cookie files are JSON arrays accepted by Puppeteer, for example:
 
 ```json
 [
-  {"name":"session","value":"…","domain":"example.com","path":"/"}
+  {"name":"session","value":"...","domain":"example.com","path":"/"}
 ]
 ```
 

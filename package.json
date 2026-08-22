@@ -1,17 +1,45 @@
 {
   "name": "simplescreenshots",
   "version": "2.0.0",
+  "description": "Visual audit CLI for public websites: configurable viewports, concurrent captures, HTML/PDF reports, and SimpleScraper manifest support",
   "type": "module",
   "bin": {
     "simplescreenshots": "./index.js"
   },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonyoandrei/SimpleScreenshots.git"
+  },
+  "bugs": {
+    "url": "https://github.com/antonyoandrei/SimpleScreenshots/issues"
+  },
+  "homepage": "https://github.com/antonyoandrei/SimpleScreenshots#readme",
+  "keywords": [
+    "cli",
+    "screenshots",
+    "puppeteer",
+    "visual-audit",
+    "pdf",
+    "chromium",
+    "viewport"
+  ],
+  "files": [
+    "index.js",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "inquirer": "^9.2.15",
-    "puppeteer": "^22.6.0",
-    "pdfkit": "^0.15.0"
+    "pdfkit": "^0.15.0",
+    "puppeteer": "^25.7.0"
   },
   "scripts": {
-    "check": "node --check index.js",
+    "check": "node --check index.js && node --check src/cli.js && node --check src/paths.js && node --check src/reports.js && node --check src/routes.js",
     "test": "node --test"
   }
 }
