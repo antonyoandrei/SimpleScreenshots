@@ -1,39 +1,86 @@
-# 📸 SimpleScreenshots
+# SimpleScreenshots 2
 
-A simple Command Line Interface (CLI) tool to automatically capture full-page screenshots of a website in both Desktop and Mobile resolutions. It crawls internal routes and organizes everything in your Documents folder.
+Visual audit companion for [SimpleScraper](../scraper). It discovers routes from links plus `robots.txt`/sitemaps, or consumes a `mirror-manifest.json`, then captures every route in configurable viewports with reusable Chromium workers.
 
-## 🚀 One-Step Installation
+## Install
 
-You can install this tool globally directly from GitHub using npm:
+Requires Node.js 20+.
 
 ```bash
-npm install -g https://github.com/TU_USUARIO/simplescreenshots
-Note: Replace YOUR_USERNAME with your actual GitHub username. Requires Node.js installed.
-
-🛠️ Usage
-Simply run the following command in any terminal:
-
-Bash
-simplescreenshots
-Follow the interactive prompts:
-
-Project Name: The name for your local folder (e.g., my-design-audit).
-
-URL: The full website address (must start with http:// or https://).
-
-📂 Storage & Output
-The tool automatically creates a folder called screenshots inside your system Documents folder.
-
-For every process, you will get:
-
-A dedicated folder with your project name.
-
-Desktop screenshots (1920x1080) for the home and internal routes.
-
-Mobile screenshots (375x812) for the home and internal routes.
-
-All images are captured in Full Page mode (from top to bottom).
-
-📄 License
-This project is licensed under the MIT License.
+npm install
+npm link
 ```
+
+## Usage
+
+Interactive mode:
+
+```bash
+simplescreenshots
+```
+
+Direct URL mode:
+
+```bash
+simplescreenshots \
+  --url https://example.com \
+  --title example-audit \
+  --viewports desktop:1440x1100,mobile:390x844 \
+  --concurrency 3
+```
+
+Audit routes already discovered by SimpleScraper:
+
+```bash
+simplescreenshots \
+  --manifest ../scraper/mirror-manifest.json \
+  --output ./artifacts/example-audit
+```
+
+Each run produces a portable folder with viewport directories, PNGs, `screenshots-manifest.json`, optional PDFs and `visual-report.html`.
+
+## Options
+
+```text
+--url <url>                 Crawl a public site from this URL
+--manifest <file>           Use routes from mirror-manifest.json
+--title <name>              Project name
+--output <dir>              Exact output directory
+--viewports <list>          desktop:1920x1080,mobile:375x812
+--concurrency <n>           Reused browser tabs/workers (default: 3)
+--max-routes <n>            Route safety limit (default: 50)
+--wait <strategy>           domcontentloaded, load, networkidle0 or networkidle2
+--cookies <file>            JSON array of Puppeteer cookies
+--fast / --full             Wait and lazy-content preset
+--no-pdf                    Skip PDF reports
+--no-html                   Skip the visual HTML report
+-h, --help                  Show help
+```
+
+Viewport entries use `name:WIDTHxHEIGHT`, with an optional device pixel ratio:
+
+```bash
+simplescreenshots --url https://example.com \
+  --viewports desktop:1920x1080@1,mobile:390x844@2,tablet:1024x1366
+```
+
+Cookie files are JSON arrays accepted by Puppeteer, for example:
+
+```json
+[
+  {"name":"session","value":"…","domain":"example.com","path":"/"}
+]
+```
+
+## Reports
+
+`visual-report.html` is a browsable visual board with one route per section and one image per viewport. PDFs are written inside each viewport directory as `full_report_<viewport>.pdf`. The JSON manifest records routes, captures, errors, wait strategy and worker statistics.
+
+## Development
+
+```bash
+npm test
+npm run check
+```
+
+Only capture sites and assets you have permission to inspect and reuse.
